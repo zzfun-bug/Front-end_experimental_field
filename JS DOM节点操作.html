@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #ddd;
+        }
+        button {
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">表格的增删查改</h1>
+    <button onclick="addRow()">新增数据</button>
+    <table id="table">
+        <tr>
+            <th>姓名</th>
+            <th>联系方式</th>
+            <th>操作</th>
+        </tr>
+        <tr>
+            <td>张小明</td>
+            <td>1008678</td>
+            <td>
+                <button onclick="editRow(this)">编辑</button>
+                <button onclick="deleteRow(this)">删除</button>
+            </td>
+        </tr>
+    </table>
+    <script src="./js/script.js"></script>
+</body>
+</html>

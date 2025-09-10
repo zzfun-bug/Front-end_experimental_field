@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <button id="btn">点击</button>
+        <ul id="list">
+            <li><p>生日</p></li>
+            <li><p>节日</p></li>
+            <li><p>纪念日</p></li>
+        </ul>
+    </div>
+    <script>
+        var cont = document.querySelector('.container')
+        var btn = document.getElementById('btn');
+        btn.addEventListener('click',click1)
+        btn.addEventListener('click',click2)
+        function click1(){
+            console.log('hello world')
+        }
+        function click2(){
+            var a = document.createElement('a')
+            a.href = 'https://www.example.com'
+            a.target = '_blank'
+            a.innerText = '打开链接'
+            cont.appendChild(a)
+        }
+        btn.removeEventListener('click',click1)
+
+        var list =document.getElementById('list')
+        list.onclick = function(e){
+            if(e.target.tagName.toLowerCase() === 'p'){
+                console.log(e.target.innerText)
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        * {
+            font-family: 'Kaiti';
+        }
+        table {
+            border: 0px solid whitesmoke;
+            /* color: black; */
+        }
+        .line {
+            /* width: 100px; */
+            height: 20px;
+            background-color: red;
+            /* color: blue; */
+            border: 2px dashed blue;
+        }
+        #highlight {
+            background-color: yellow;
+            color: red;
+            font-size: 30px;
+        }
+        #element:hover {
+            color: green;
+            font-size: 26px;
+            background-color: red;
+        }
+        .box {
+            background-color: red;
+            /* display: inline-block; */
+            /* display: inline; */
+            padding: 100px 50px;
+            border: 5px double black;
+            margin: 50px 20px;
+        }
+        .box p {
+            background-color: aqua;
+        }
+        button {
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="box"><P>content</P></div>
+    <h1 style="color: silver; font-size: 18px;">你好</h1>
+    <p style="color: rebeccapurple; font-size: 1rem;">demo</p>
+    <h2 class="top">下面是表格</h2>
+    <h3 id="element">之后才是表格</h3>
+    <table border="1">
+        <tr>
+            <th>水果</th>
+            <th>数量</th>
+            <th>价格</th>
+            <th>产地</th>
+        </tr>
+        <tr>
+            <td>apple</td>
+            <td>banana</td>
+            <td>cherry</td>
+            <td>date</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+            <td>8</td>
+        </tr>
+        <tr>
+            <td>9</td>
+            <td>10</td>
+            <td>11</td>
+            <td>12</td>
+        </tr>
+    </table>
+    <div class="line">
+        <hr>
+    </div>
+    <h2 id="highlight">这是一个id选择器</h2>
+    <button><a href="https://www.baidu.com" target="_blank">百度</a></button>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <button><a href="">回到顶部</a></button>
+    <hr>
+    <form action="https://www.baidu.com" method="get">
+        <label for="username">用户名：</label>
+        <input type="text" name="wd" placeholder="请输入用户名">
+        <br>
+        <label for="pwd">密码：</label>
+        <input type="password" name="pwd" placeholder="请输入密码">
+        <br>
+        <input type="radio" name="gender" value="male"> 男
+        <input type="radio" name="gender" value="female"> 女
+        <input type="radio" name="gender" value="other"> 其他
+        <br>
+        <label for="">爱好</label>
+        <input type="checkbox" name="hobby" value="sing"> sing
+        <input type="checkbox" name="hobby" value="dance"> dance
+        <input type="checkbox" name="hobby" value="other"> other
+        <br>
+
+        <!-- 下拉列表 -->
+        <label for="country">国家:</label>
+        <select id="country" name="country">
+            <option value="cn">CN</option>
+            <option value="usa">USA</option>
+            <option value="uk">UK</option>
+        </select>
+        <br>
+        <input type="submit">
+
+    </form>
+</body>
+</html>
