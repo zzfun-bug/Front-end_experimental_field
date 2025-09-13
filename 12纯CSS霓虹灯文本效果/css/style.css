@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand:300');
+body
+{
+    margin: 0;
+    padding: 0;
+    background: url();
+    background-color: black;
+    background-size: cover;
+    font-family: 'Quicksand', sans-serif;
+}
+.neon
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    margin: 0;
+    padding: 0 20px;
+    font-size: 6em;
+    color: #fff;
+    text-shadow: 0 0 20px #ff005b;
+}
+.neon:after
+{
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0 20px;
+    z-index: -1;
+    color: #ff005b;
+    filter: blur(15px);
+}
+.neon:before
+{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fe3a80;
+    z-index: -2;
+    opacity: 1;
+    filter: blur(40px);
+}
