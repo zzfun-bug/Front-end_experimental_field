@@ -1,0 +1,45 @@
+body
+{
+    margin: 0;
+    padding: 0;
+    font-family: arial;
+    background: #262626;
+}
+ul
+{
+    margin: 300px auto;
+    width: 50%;
+}
+ul li 
+{
+    list-style: none;
+    float: left;
+    text-align: center;
+    width: 33.33%;
+}
+ul li a
+{
+    color: #fff;
+    text-decoration: none;
+}
+ul li a .fa
+{
+    font-size: 4em;
+    transition: .5s;
+}
+ul li a .text
+{
+    opacity: 0;
+    transition: .5s;
+    transform: translateY(20px);
+}
+ul li:hover .fa
+{
+    transform: translateY(-20px) scale(.5);
+
+}
+ul li:hover .text
+{
+    transform: translateY(-20px);
+    opacity: 1;
+}
