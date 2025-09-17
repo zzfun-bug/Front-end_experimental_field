@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="add()">点击</button>
+    <div class="container"></div>
+    <script>
+        function add(){
+            const fruit = ["苹果","香蕉","橙子"]
+            const lis = fruit.map(n=>`<li style="font-family: KaiTi; font-weight: bold; font-size: 25px">${n}</li>`).join('  ')
+            let temp = document.getElementsByClassName('container')
+            console.log(temp)
+            temp[0].innerHTML = lis
+            console.log(lis)
+        }
+    </script>
+</body>
+</html>

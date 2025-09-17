@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button class="container"  onclick="feel_await()">click</button>
+    <button class="container"  onclick="feel_map()">click</button>
+    <div id="box"></div>
+
+    <script>
+        async function feel_await(){
+            const res = await fetch('https://api.github.com/repos/facebook/react')
+            console.log(res)
+            const data = await res.json()
+            console.log(data)
+            console.log(data.full_name,data.stargazers_count)
+        }
+        async function feel_map() {
+            const nums = ['apple','banana','orange']
+            const lis = nums.map(n=>`<li style="color: black;font-size: 25px;font-family: SongTi;font-weight: bold">${n}</li>`).join('<br>')
+            let temp = document.getElementById('box')
+            temp.innerHTML = lis
+            console.log(lis)
+        }
+    </script>
+</body>
+</html>

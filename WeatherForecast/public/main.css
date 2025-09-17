@@ -1,0 +1,46 @@
+:root {
+  --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: "PingFang SC", sans-serif; }
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradient);
+  color: #fff;
+}
+.card {
+  width: 90%;
+  max-width: 420px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 30px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.8s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+h1 { font-size: 26px; margin-bottom: 10px; }
+.temp { font-size: 52px; font-weight: 700; margin: 10px 0; }
+.desc { font-size: 18px; opacity: 0.9; }
+.forecast {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+}
+.forecast div {
+  text-align: center;
+  flex: 1;
+}
+.forecast p:first-child { font-size: 14px; opacity: 0.8; }
+.forecast p:last-child { font-size: 16px; margin-top: 4px; }
+footer {
+  margin-top: 20px;
+  font-size: 12px;
+  opacity: 0.7;
+  text-align: center;
+}
