@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <button onclick="show()">click</button><br>
+        <img src="" alt="" id="avatar"><br>
+        <p id="followers"></p>
+        <p id="reponums"></p>
+    </div>
+    <script>
+        async function show() {
+            const data = await fetch("https://api.github.com/users/github")
+            const res = await data.json()
+            console.log(res)
+            const reponums = res.public_repos
+            console.log(res.bio)
+            console.log(reponums)
+            const content1 = document.getElementById('reponums')
+            content1.innerHTML = reponums
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #list li:nth-child(2n){
+            color: red;
+            font-family: Kaiti;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <input  type="text" id="innumber" placeholder="please input" value="5">
+        <button onclick="search()">获取前n个Github用户</button>
+        <ul id="list"></ul>
+    </div>
+    <script>
+        async function search() {
+            console.log('test')
+            const n = Number(document.getElementById("innumber").value)
+            const ul = document.getElementById("list")
+            ul.innerHTML = ""
+            for(let i=1; i<=n; i++){
+                try{
+                    const res = await fetch(`https://api.github.com/user/${i}`)
+                    if(!res.ok) throw new Error('404');
+                    const user = await res.json()
+                    ul.innerHTML += `<li><img src="${user.avatar_url}" width="30">${user.login}</li>`;
+                } catch (e){
+                    console.log(`用户${i}跳过（404）`);
+                }
+            }
+        }
+    </script>
+</body>
+</html>

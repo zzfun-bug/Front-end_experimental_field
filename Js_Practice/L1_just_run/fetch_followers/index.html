@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <button onclick="get_data()">click</button><br>
+        <img src="" alt="" id="avatar"><br>
+        <p id="followers"></p>
+    </div>
+    <script>
+        async function get_data() {
+            const data = await fetch("https://api.github.com/users/github")
+            const res = await data.json()
+            console.log(res)
+            let content1 = document.getElementById("avatar")
+            let content2 = document.getElementById("followers")
+            const touxiang = res.avatar_url
+            const fans = res.followers
+            content1.src = touxiang
+            content2.innerHTML = fans
+        }
+    </script>
+</body>
+</html>

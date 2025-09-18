@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <button onclick="zhua()">click</button>
+        <img id="im" src="" alt="">
+    </div>
+    <script>
+        async function zhua(){
+            const res = await fetch("https://api.github.com/users/github")
+            console.log(res)
+            const data = await res.json()
+            const mm = data.avatar_url
+            console.log(data)
+            const ii = document.getElementById('im')
+            ii.src = mm
+            console.log(mm)
+        }
+    </script>
+</body>
+</html>
