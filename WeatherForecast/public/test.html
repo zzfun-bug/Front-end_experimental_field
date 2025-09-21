@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8/normalize.min.css">
+</head>
+<body>
+    <!-- 导航栏开始 -->
+    <nav class="navbar top-navbar">
+        <div class="container nav-wrapper">
+            <!-- 汉堡按钮（小屏可见） -->
+            <button class="nav-toggle" aria-label="切换导航">
+                <span></span><span></span><span></span>
+            </button>
+
+            <div class="navbar-collapse">
+                <ul class="navbar-nav">
+                    <li class="active"><a href="#">主站首页</a></li>
+                    <li><a href="#">领导主站</a></li>
+                    <li><a href="#">部门概括</a></li>
+                    <li><a href="#">新闻资讯</a></li>
+                    <li><a href="#">信息公开</a></li>
+                    <li><a href="#">服务办事</a></li>
+                    <li><a href="#">天气预报</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <script>
+        document.querySelector('.nav-toggle').addEventListener('click', function() {
+            document.querySelector('.navbar-collapse').classList.toggle('show');
+        });
+    </script>
+</body>
+</html>
