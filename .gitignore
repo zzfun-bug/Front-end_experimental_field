@@ -1,1 +1,52 @@
+# === IDE & OS ===
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+
+# === Archives ===
+*.zip
+*.tar
+*.tar.gz
+
+# === Environment files ===
+.env
+.env.*
+!.env.example
+
+# === Logs ===
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# === Java / Maven ===
+**/target/
+**/classes/
+*.class
+*.war
+*.ear
+.mvn/wrapper/maven-wrapper.jar
+
+# === Node / Frontend ===
+**/node_modules/
+**/dist/
+**/.cache/
+**/.npm/
+**/.yarn/**
+**/coverage/
+**/.nuxt/
+
+# === uni-app / 小程序构建产物 ===
+**/unpackage/
+
+# === Project-specific (safety, explicit) ===
+CDTU-Visit-Reservation-System/admin_port/target/
+CDTU-Visit-Reservation-System/user_port/node_modules/
+CDTU-Visit-Reservation-System/user_port/unpackage/
+WeatherForecast/node_modules/
+
 video/02/bg.mp4
