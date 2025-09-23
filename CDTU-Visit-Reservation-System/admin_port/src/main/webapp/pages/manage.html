@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>admin审核</title>
+    <!-- 本地引入 -->
+    <link rel="stylesheet" href="/cdtu-visit/css/element-ui@2.15.14.css">
+    <style>
+        .app-container {
+            position: relative;
+            width: 100%;
+            height: calc(100vh - 84px);
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="app-container">
+        <!--条件查询区域-->
+        <el-form ref="form" :model="queryParam" label-width="80px">
+            <el-row :gutter="20">
+                <el-col :span="6">
+                    <el-form-item label="来访单位">
+                        <el-input v-model="queryParam.visitUnit" size="small" placeholder="请输入部门名称"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                    <el-form-item label="联系人">
+                        <el-input v-model="queryParam.contactName" size="small" placeholder="请输入联系人名称"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                    <el-form-item label="联系电话">
+                        <el-input v-model="queryParam.contactPhone" size="small" placeholder="请输入联系电话"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                    <el-form-item label-width="100px">
+                        <el-button @click="handleSearch" type="primary" icon="el-icon-search" size="small">查询</el-button>
+                        <el-button @click="handleReset" type="warning" icon="el-icon-refresh-right" size="small">重置</el-button>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+        </el-form>
+        <!--表格区域-->
+        <el-row :gutter="20">
+            <el-col :span="24">
+                <el-table :data="tableData" style="width: 100%" border>
+                    <el-table-column type="index" label="序号" width="60" align="center"></el-table-column>
+                    <el-table-column label="参观时间" width="240" align="center">
+                        <template slot-scope="scope">
+                            {{scope.row.visitDate}}
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="visitUnit" label="单位名称" width="220" align="center"></el-table-column>
+                    <el-table-column label="单位性质" width="120" align="center">
+                        <template slot-scope="scope">
+                            <el-tag
+                                    v-if="scope.row.visitNature === 1"
+                                    type="primary"
+                            >学校</el-tag>
+                            <el-tag
+                                    v-if="scope.row.visitNature === 2"
+                                    type="success"
+                            >企事业单位</el-tag>
+                            <el-tag
+                                    v-if="scope.row.visitNature === 3"
+                                    type="warning"
+                            >政府部门</el-tag>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="来访人数" width="120" align="center">
+                        <template slot-scope="scope">
+                            {{scope.row.visitNum}} / 人
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="visitCar" label="车牌号" width="120" align="center"></el-table-column>
+                    <el-table-column prop="contactName" label="联系人" width="120" align="center"></el-table-column>
+                    <el-table-column prop="contactPhone" label="联系电话" width="160" align="center"></el-table-column>
+                    <el-table-column prop="timeSolt" label="申请时间" width="320" align="center"></el-table-column>
+                    <el-table-column label="审核状态" width="120" align="center">
+                        <template slot-scope="scope">
+                            <el-tag v-if="scope.row.status === 0" type="info">待审核</el-tag>
+                            <el-tag v-if="scope.row.status === 1" type="success">已通过</el-tag>
+                            <el-tag v-if="scope.row.status === 2" type="danger">已驳回</el-tag>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="操作" width="150" fixed="right" align="center">
+                        <template slot-scope="scope">
+                            <el-button v-if="scope.row.status === 0" size="mini" type="primary" icon="el-icon-edit"
+                                       @click="handleEdit(scope.row)">审核</el-button>
+                            <el-button v-else size="mini" type="info" disabled>已审核</el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </el-col>
+        </el-row>
+        <!--分页条区域-->
+        <el-row :gutter="20" style="margin-top: 20px">
+            <el-col :span="24">
+                <el-pagination
+                        background
+                        :page-size="queryParam.pageSize"
+                        :current-page="queryParam.currentPage"
+                        layout="prev, pager, next"
+                        :total="total"
+                        align="center"
+                        :hide-on-single-page="true"
+                        @current-change="loadData">
+                </el-pagination>
+            </el-col>
+        </el-row>
+
+        <!--编辑对话框-->
+        <el-dialog title="申请审核" :visible.sync="dialogUpdateVisible" width="36%">
+            <el-form :model="updateForm" ref="updateForm" :rules="rules" label-width="100px" class="demo-ruleForm">
+                <el-form-item label="参观时间:">
+                    <el-input v-model="updateForm.visitDate" disabled style="width: 90%;"></el-input>
+                </el-form-item>
+                <el-form-item label="单位名称:">
+                    <el-input v-model="updateForm.visitUnit" disabled style="width: 90%;"></el-input>
+                </el-form-item>
+                <el-form-item label="单位性质:">
+                    <el-input v-model="updateForm.visitNature" disabled style="width: 90%;"></el-input>
+                </el-form-item>
+                <el-form-item label="来访人数:">
+                    <el-input v-model="updateForm.visitNum" disabled style="width: 90%;"></el-input>
+                </el-form-item>
+                <el-form-item label="车牌号:">
+                    <el-input v-model="updateForm.visitCar" disabled style="width: 90%;"></el-input>
+                </el-form-item>
+                <el-form-item label="联系人:">
+                    <el-input v-model="updateForm.contactName" disabled style="width: 90%;"></el-input>
+                </el-form-item>
+                <el-form-item label="联系电话:">
+                    <el-input v-model="updateForm.contactPhone" disabled style="width: 90%;"></el-input>
+                </el-form-item>
+                <el-form-item label="审核状态:" prop="status">
+                    <el-radio-group v-model="updateForm.status">
+                        <el-radio :label="1">通过</el-radio>
+                        <el-radio :label="2">驳回</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <template v-if="updateForm.status==1">
+                    <el-form-item label="讲解员姓名:" prop="commentatorName">
+                        <el-input v-model="updateForm.commentatorName" placeholder="请输入讲解员姓名" style="width: 90%;"></el-input>
+                    </el-form-item>
+                    <el-form-item label="讲解员电话:" prop="commentatorPhone">
+                        <el-input v-model="updateForm.commentatorPhone" placeholder="请输入讲解员电话" style="width: 90%;"></el-input>
+                    </el-form-item>
+                </template>
+                <el-form-item label="驳回说明:" prop="rejectReason" v-if="updateForm.status==2">
+                    <el-input type="textarea" v-model="updateForm.rejectReason" placeholder="请输入驳回说明" style="width: 90%;"></el-input>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                    <el-button @click="dialogUpdateVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="handleUpdateSubmit">确 定</el-button>
+                </span>
+        </el-dialog>
+    </div>
+</div>
+</body>
+<script src="/cdtu-visit/js/vue@2.7.16.js"></script>
+<script src="/cdtu-visit/js/element-ui@2.15.14.js"></script>
+<script src="/cdtu-visit/js/axios.min.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                queryParam: {
+                    visitUnit: '',
+                    contactName: '',
+                    contactPhone: '',
+                    currentPage: 1,
+                    pageSize: 4
+                },
+                tableData: [],
+                total: 0,
+                updateForm: {
+                    id: null,
+                    visitDate: '',
+                    visitUnit: '',
+                    visitNature: '',
+                    visitNum: '',
+                    visitCar: '',
+                    contactName: '',
+                    contactPhone: '',
+                    status: 1,
+                    commentatorName: '',
+                    commentatorPhone: '',
+                    rejectReason: '',
+                },
+                dialogUpdateVisible: false,
+                rules: {
+                    status: [{required: true, message: '请选择审核状态', trigger: 'change'}],
+                    commentatorName: [{ required: true, message: '请输入讲解员姓名', trigger: 'blur' }],
+                    commentatorPhone: [{ required: true, message: '请输入讲解员电话', trigger: 'blur' }],
+                    rejectReason: [{ required: true, message: '请输入驳回说明', trigger: 'blur' }],
+                }
+            }
+        },
+        methods: {
+            loadData(currentPage = this.queryParam.currentPage, pageSize = this.queryParam.pageSize) {
+                axios({
+                    url: "http://localhost:8080/cdtu-visit/page",
+                    method: "get",
+                    params: {
+                        visitUnit: this.queryParam.visitUnit,
+                        contactName: this.queryParam.contactName,
+                        contactPhone: this.queryParam.contactPhone,
+                        currentPage: currentPage,
+                        pageSize: pageSize
+                    }
+                }).then(response => {
+                    // response.data: 响应对象中的data属性存储就是，后端返回的数据
+                    const data = response.data;
+                    this.tableData = data.applyList || [];// 更新表格数据
+                    this.total = data.total || 0; // 更新总记录数
+                }).catch(error => {
+                    console.error('加载数据失败:', error);
+                    this.$message.error('加载数据失败');
+                });
+            },
+            handleSearch() {
+                this.queryParam.currentPage = 1;
+                this.loadData();
+            },
+            handleReset() {
+                this.queryParam = {
+                    visitUnit: '',
+                    contactName: '',
+                    contactPhone: '',
+                    currentPage: 1,
+                    pageSize: 4
+                };
+                this.loadData();
+            },
+            handleEdit(row) {
+                this.updateForm = { ...row, status: row.status || 0 };
+                this.dialogUpdateVisible = true;
+            },
+            handleUpdateSubmit() {
+                axios({
+                    url: "http://localhost:8080/cdtu-visit/audit",
+                    method: "post",
+                    data: {
+                        id: this.updateForm.id, // 更新记录的ID
+                        visitDate: this.updateForm.visitDate, // 参观时间
+                        visitUnit: this.updateForm.visitUnit, // 单位名称
+                        visitNature: this.updateForm.visitNature, // 单位性质
+                        visitNum: this.updateForm.visitNum, // 来访人数
+                        visitCar: this.updateForm.visitCar, // 车牌号
+                        contactName: this.updateForm.contactName, // 联系人
+                        contactPhone: this.updateForm.contactPhone, // 联系电话
+                        status: this.updateForm.status, // 审核状态
+                        commentatorName: this.updateForm.commentatorName, // 讲解员姓名
+                        commentatorPhone: this.updateForm.commentatorPhone, // 讲解员电话
+                        rejectReason: this.updateForm.rejectReason, // 驳回理由
+                        updateBy: "admin" // 当前更新操作的用户
+                    }
+                }).then(response => {
+                    console.log('响应数据:', response.data); // 打印响应数据用于调试
+                    if (response.data.success) {
+                        this.$message.success('审核成功');
+                        this.dialogUpdateVisible = false; // 关闭对话框
+                        this.loadData(); // 重新加载数据，刷新表格
+                    } else {
+                        this.$message.error(response.data.message || '审核失败');
+                        console.log('提交数据:', this.updateForm);
+                    }
+                }).catch(error => {
+                    console.error('更新失败:', error);
+                    this.$message.error('更新失败');
+                });
+            },
+        },
+        mounted() {
+            this.loadData(); // 初次加载数据
+        }
+    });
+</script>
+</html>>
+
+
