@@ -1,19 +1,34 @@
 # === IDE & OS ===
 .idea/
 .vscode/
+.cursor/
 *.iml
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
 Thumbs.db
+ehthumbs.db
+*.swp
+*.swo
+*~
 
 # === Archives ===
 *.zip
 *.tar
 *.tar.gz
+*.tgz
 
 # === Environment files ===
 .env
 .env.*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 !.env.example
+server/env.config
 
 # === Logs ===
 logs/
@@ -34,11 +49,64 @@ pnpm-debug.log*
 # === Node / Frontend ===
 **/node_modules/
 **/dist/
+**/build/
 **/.cache/
 **/.npm/
 **/.yarn/**
 **/coverage/
 **/.nuxt/
+**/.next/
+**/public/
+**/.out/
+**/.storybook-out/
+
+# === TypeScript & Build ===
+*.tsbuildinfo
+**/.rpt2_cache/
+**/.rts2_cache_cjs/
+**/.rts2_cache_es/
+**/.rts2_cache_umd/
+
+# === Package Managers ===
+jspm_packages/
+bower_components/
+.yarn-integrity
+**/.yarn/**
+**/.npm/
+
+# === Development Tools ===
+.eslintcache
+.nyc_output
+.grunt
+.lock-wscript
+build/Release
+.node_repl_history
+.parcel-cache
+
+# === Testing & Debug ===
+test-results/
+playwright-report/
+test-results.xml
+*.lcov
+
+# === Runtime Data ===
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# === Temporary Files ===
+tmp/
+temp/
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# === Deployment ===
+.vercel
+.netlify
+.local
 
 # === uni-app / 小程序构建产物 ===
 **/unpackage/
@@ -48,5 +116,12 @@ CDTU-Visit-Reservation-System/admin_port/target/
 CDTU-Visit-Reservation-System/user_port/node_modules/
 CDTU-Visit-Reservation-System/user_port/unpackage/
 WeatherForecast/node_modules/
+Intelligent-Study-Notes-And-Task-Management-Platform/node_modules/
+Intelligent-Study-Notes-And-Task-Management-Platform/dist/
+Intelligent-Study-Notes-And-Task-Management-Platform/build/
 
+# === Project-specific Files ===
 video/02/bg.mp4
+typescript.mdc
+*.sql
+!server/env.example
