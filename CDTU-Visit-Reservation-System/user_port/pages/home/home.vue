@@ -21,35 +21,30 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				imgList: [
-					'/static/tabbar/bg1.jpg',
-					'/static/tabbar/bg2.jpg'
-				],
-				baseList: [{
-					name1: '/static/tabbar/apply.png',
-					
-					title1: '参观申请',
-					
-				},
-				]
-			}
-		},
-		methods: {
-			clickItem(type) {
-				if (type === 'apply') {
-					this.$refs.uToast.show({
-						title: '参观申请页面',
-						type: 'success'
-					});
-					uni.navigateTo({
-						url: "/pages/visit/apply/apply"
-					});
-				} 
-			}
+<script setup>
+	import { ref } from 'vue'
+	
+	const uToast = ref(null)
+	
+	const imgList = ref([
+		'/static/tabbar/bg1.jpg',
+		'/static/tabbar/bg2.jpg'
+	])
+	
+	const baseList = ref([{
+		name1: '/static/tabbar/apply.png',
+		title1: '参观申请',
+	}])
+	
+	const clickItem = (type) => {
+		if (type === 'apply') {
+			uToast.value.show({
+				title: '参观申请页面',
+				type: 'success'
+			});
+			uni.navigateTo({
+				url: "/pages/visit/apply/apply"
+			});
 		}
 	}
 </script>

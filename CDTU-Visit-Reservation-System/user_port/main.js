@@ -1,5 +1,19 @@
 import App from './App'
 
+// #ifdef VUE3
+import { createSSRApp } from 'vue'
+import uViewPlus from 'uview-plus'
+import './uni.promisify.adaptor'
+
+export function createApp() {
+  const app = createSSRApp(App)
+  app.use(uViewPlus)
+  return {
+    app
+  }
+}
+// #endif
+
 // #ifndef VUE3
 import Vue from 'vue'
 // main.js
@@ -12,14 +26,4 @@ const app = new Vue({
   ...App
 })
 app.$mount()
-// #endif
-
-// #ifdef VUE3
-import { createSSRApp } from 'vue'
-export function createApp() {
-  const app = createSSRApp(App)
-  return {
-    app
-  }
-}
 // #endif

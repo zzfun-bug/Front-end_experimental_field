@@ -48,106 +48,111 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				formModel: {
-					visitDate: '',
-					visitUnit: '',
-					visitNature: '', // 存储 visitNature 的 value
-					visitNum: '',
-					visitCar: '',
-					contactName: '',
-					contactPhone: ''
-				},
-				visitNatures: [{
-						name: '学校',
-						value: '1'
-					},
-					{
-						name: '企事业单位',
-						value: '2'
-					},
-					{
-						name: '政府部门',
-						value: '3'
-					}
-				],
-				showVisitNatureDropdown: false,
-				showSubmitPopup: false,
-				selectedVisitNature: '' // 用于显示选择的单位性质名称
-			};
-		},
-		onLoad(options) {
-			// 读取参数
-			const visitDate = options.visitDate;
-			const timeSlot = options.timeSlot;
-			this.formModel.visitDate = `${visitDate} ${timeSlot}`;
+<script setup>
+	import { ref, reactive, onMounted } from 'vue'
+	import { onLoad } from '@dcloudio/uni-app'
+	
+	const form = ref(null)
+	
+	const formModel = reactive({
+		visitDate: '',
+		visitUnit: '',
+		visitNature: '', // 存储 visitNature 的 value
+		visitNum: '',
+		visitCar: '',
+		contactName: '',
+		contactPhone: ''
+	})
+	
+	const visitNatures = ref([{
+		name: '学校',
+		value: '1'
+	},
+	{
+		name: '企事业单位',
+		value: '2'
+	},
+	{
+		name: '政府部门',
+		value: '3'
+	}
+	])
+	
+	const showVisitNatureDropdown = ref(false)
+	const showSubmitPopup = ref(false)
+	const selectedVisitNature = ref('') // 用于显示选择的单位性质名称
+	
+	onLoad((options) => {
+		// 读取参数
+		const visitDate = options.visitDate;
+		const timeSlot = options.timeSlot;
+		formModel.visitDate = `${visitDate} ${timeSlot}`;
 
-			// 处理单位性质值
-			const visitNature = options.visitNature;
-			if (visitNature) {
-				const nature = this.visitNatures.find(n => n.value === visitNature);
-				if (nature) {
-					this.formModel.visitNature = nature.value; // 使用数字值
-					this.selectedVisitNature = nature.name; // 显示名称
-				}
-			}
-		},
-		methods: {
-			navigateBack() {
-				uni.navigateBack();
-			},
-			showSubmitDialog() {
-				this.showSubmitPopup = true;
-			},
-
-			// 格式化日期为 yyyy-MM-dd
-			formatDate(date) {
-				const d = new Date(date);
-				const year = d.getFullYear();
-				const month = String(d.getMonth() + 1).padStart(2, '0');
-				const day = String(d.getDate()).padStart(2, '0');
-				return `${year}-${month}-${day}`;
-			},
-			confirmSubmit() {
-				this.showSubmitPopup = false;
-
-				// 格式化日期
-				this.formModel.visitDate = this.formatDate(this.formModel.visitDate);
-				// 发起 POST 请求
-				uni.request({
-					url: 'http://localhost:8080/cdtu-visit/add', // 后端接口地址
-					method: 'POST',
-					data: this.formModel,
-					header: {
-						'Content-Type': 'application/json' // 或其他适合你接口的 Content-Type
-					},
-					success: (response) => {
-						if (response.statusCode === 200) {
-							uni.$u.toast('提交成功');
-							console.log('提交成功:', response.data);
-						} else {
-							uni.$u.toast('提交失败');
-						}
-					},
-					fail: (error) => {
-						uni.$u.toast('请求失败');
-						console.error('请求失败:', error);
-					}
-				});
-			},
-			cancelSubmit() {
-				this.showSubmitPopup = false;
-				uni.$u.toast('取消成功');
-			},
-			selectVisitNature(e) {
-				this.formModel.visitNature = e.value; // 设置为 value 值
-				this.selectedVisitNature = e.name; // 更新显示的单位性质名称
-				this.showVisitNatureDropdown = false;
+		// 处理单位性质值
+		const visitNature = options.visitNature;
+		if (visitNature) {
+			const nature = visitNatures.value.find(n => n.value === visitNature);
+			if (nature) {
+				formModel.visitNature = nature.value; // 使用数字值
+				selectedVisitNature.value = nature.name; // 显示名称
 			}
 		}
+	})
+	
+	const navigateBack = () => {
+		uni.navigateBack();
+	}
+	
+	const showSubmitDialog = () => {
+		showSubmitPopup.value = true;
+	}
+
+	// 格式化日期为 yyyy-MM-dd
+	const formatDate = (date) => {
+		const d = new Date(date);
+		const year = d.getFullYear();
+		const month = String(d.getMonth() + 1).padStart(2, '0');
+		const day = String(d.getDate()).padStart(2, '0');
+		return `${year}-${month}-${day}`;
+	}
+	
+	const confirmSubmit = () => {
+		showSubmitPopup.value = false;
+
+		// 格式化日期
+		formModel.visitDate = formatDate(formModel.visitDate);
+		// 发起 POST 请求
+		uni.request({
+			url: 'http://localhost:8080/cdtu-visit/add', // 后端接口地址
+			method: 'POST',
+			data: formModel,
+			header: {
+				'Content-Type': 'application/json' // 或其他适合你接口的 Content-Type
+			},
+			success: (response) => {
+				if (response.statusCode === 200) {
+					uni.$u.toast('提交成功');
+					console.log('提交成功:', response.data);
+				} else {
+					uni.$u.toast('提交失败');
+				}
+			},
+			fail: (error) => {
+				uni.$u.toast('请求失败');
+				console.error('请求失败:', error);
+			}
+		});
+	}
+	
+	const cancelSubmit = () => {
+		showSubmitPopup.value = false;
+		uni.$u.toast('取消成功');
+	}
+	
+	const selectVisitNature = (e) => {
+		formModel.visitNature = e.value; // 设置为 value 值
+		selectedVisitNature.value = e.name; // 更新显示的单位性质名称
+		showVisitNatureDropdown.value = false;
 	}
 </script>
 

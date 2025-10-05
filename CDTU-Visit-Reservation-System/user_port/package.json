@@ -1,0 +1,26 @@
+{
+  "name": "cdtu-visit-user-port",
+  "version": "1.0.0",
+  "description": "CDTU访问预约系统用户端",
+  "main": "main.js",
+  "scripts": {
+    "dev": "uni build --watch",
+    "build": "uni build",
+    "build:mp-weixin": "uni build -p mp-weixin"
+  },
+  "dependencies": {
+    "uview-plus": "^3.2.0"
+  },
+  "devDependencies": {
+    "@dcloudio/uni-cli-shared": "^3.0.0",
+    "@dcloudio/uni-app": "^3.0.0"
+  },
+  "keywords": [
+    "uni-app",
+    "vue3",
+    "uview-plus",
+    "小程序"
+  ],
+  "author": "CDTU",
+  "license": "MIT"
+}

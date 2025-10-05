@@ -88,7 +88,7 @@ public class ApplicationUserDaoImpl implements ApplicationUserDao {
 
         Connection connection = DriverManager.getConnection(url, name, password);
 
-        String sql = "SELECT COUNT(*) FROM application_user WHERE status = 0 AND del_flag = 0";
+        String sql = "SELECT COUNT(*) FROM application_user WHERE del_flag = 0";
         // 查询条件动态组装
         String visitUnit = (String)params.get("visitUnit");
         if (visitUnit != null && !visitUnit.equals("")) {

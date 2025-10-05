@@ -13,60 +13,50 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				// 按钮是否显示加载中特效
-				isLoading: false,
-				// 禁用按钮
-				isDsabled: false
-			}
-		},
-		onLoad() {},
-		onShow() {
-
-		},
-		methods: {
-			login() {
-				// 开启加载特效
-				this.isLoading = true;
-				this.isDsabled = true;
-				// 禁用按钮
-				wx.login({
-					success(res) {
-						if (res.code) {
-							// 测试临时凭证是否正确获取
-							console.log(res.code)
-							uni.request({
-								url: 'http://localhost:8080/cdtu-visit/wx/login',
-								method: 'GET',
-								data: {
-									code: res.code
-								},
-								success: (res) => {
-									// 关闭特效:
-									this.isLoading = false;
-									this.isDsabled = false;
-									// res.data：响应数据
-									console.log(res.data)
-									// 本地缓存：参考官方文档：https://uniapp.dcloud.net.cn/api/storage/storage.html#setstoragesync
-									uni.setStorageSync('userId', res.data);
-									// 在其他页面中，可以随时使用uni.getStorageSync(KEY)从本地缓存中同步获取指定 key 对应的内容。
-									//  如：uni.getStorageSync('userId');获取openid
-									uni.switchTab({
-										url: '/pages/home/home'
-									});
-								}
+<script setup>
+	import { ref } from 'vue'
+	
+	// 按钮是否显示加载中特效
+	const isLoading = ref(false)
+	// 禁用按钮
+	const isDsabled = ref(false)
+	
+	const login = () => {
+		// 开启加载特效
+		isLoading.value = true;
+		isDsabled.value = true;
+		// 禁用按钮
+		wx.login({
+			success(res) {
+				if (res.code) {
+					// 测试临时凭证是否正确获取
+					console.log(res.code)
+					uni.request({
+						url: 'http://localhost:8080/cdtu-visit/wx/login',
+						method: 'GET',
+						data: {
+							code: res.code
+						},
+						success: (res) => {
+							// 关闭特效:
+							isLoading.value = false;
+							isDsabled.value = false;
+							// res.data：响应数据
+							console.log(res.data)
+							// 本地缓存：参考官方文档：https://uniapp.dcloud.net.cn/api/storage/storage.html#setstoragesync
+							uni.setStorageSync('userId', res.data);
+							// 在其他页面中，可以随时使用uni.getStorageSync(KEY)从本地缓存中同步获取指定 key 对应的内容。
+							//  如：uni.getStorageSync('userId');获取openid
+							uni.switchTab({
+								url: '/pages/home/home'
 							});
-						} else {
-							console.log('登录失败！' + res.errMsg)
 						}
-					}
-				})
+					});
+				} else {
+					console.log('登录失败！' + res.errMsg)
+				}
 			}
-		}
-
+		})
 	}
 </script>
 

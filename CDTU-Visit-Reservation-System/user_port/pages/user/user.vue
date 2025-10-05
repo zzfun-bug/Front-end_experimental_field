@@ -30,26 +30,22 @@
   </view>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      applicationRecords: [
-        { visitTime: '2024-08-01', details: '详细内容 1', status: 0 },
-        { visitTime: '2024-08-02', details: '详细内容 2', status: 1 },
-        { visitTime: '2024-08-03', details: '详细内容 3', status: 2 }
-      ],
-      showDetailPopup: false,
-      selectedItem: {}
-    };
-  },
-  methods: {
-    showDetail(item) {
-      this.selectedItem = item;
-      this.showDetailPopup = true;
-    }
-  }
-};
+<script setup>
+import { ref } from 'vue'
+
+const applicationRecords = ref([
+  { visitTime: '2024-08-01', details: '详细内容 1', status: 0 },
+  { visitTime: '2024-08-02', details: '详细内容 2', status: 1 },
+  { visitTime: '2024-08-03', details: '详细内容 3', status: 2 }
+])
+
+const showDetailPopup = ref(false)
+const selectedItem = ref({})
+
+const showDetail = (item) => {
+  selectedItem.value = item;
+  showDetailPopup.value = true;
+}
 </script>
 
 <style scoped>
