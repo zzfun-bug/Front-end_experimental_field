@@ -11,7 +11,7 @@ export const analyticsService = {
             const [noteStats, taskStats, weeklyTaskStats, notesResponse, tasksResponse] = await Promise.all([
                 notesService.getNoteStats(),
                 tasksService.getTaskStats(),
-                tasksService.getWeeklyStats(12),
+                tasksService.getWeeklyStats(5),
                 apiClient.get<any[]>('/notes'),
                 apiClient.get<any[]>('/tasks'),
             ]);

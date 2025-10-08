@@ -19,7 +19,7 @@ const TaskEditor: React.FC<TaskEditorProps> = ({
     onSave,
     isLoading = false,
 }) => {
-    const { t, tc, language } = useTranslation();
+    const { t, tc } = useTranslation();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [priority, setPriority] = useState<'low' | 'medium' | 'high'>('medium');
@@ -74,7 +74,7 @@ const TaskEditor: React.FC<TaskEditorProps> = ({
         setTitle('');
         setDescription('');
         setPriority('medium');
-        setDueDate(undefined);
+        setDueDate('');
         setErrors({});
     };
 

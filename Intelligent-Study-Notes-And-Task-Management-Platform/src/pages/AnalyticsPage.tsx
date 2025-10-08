@@ -113,7 +113,7 @@ const AnalyticsPage: React.FC = () => {
   }
 
   // 准备图表数据
-  const weeklyTasksChartData = analyticsData.weeklyTaskStats.slice(0, 7).reverse().map(stat => ({
+  const weeklyTasksChartData = analyticsData.weeklyTaskStats.slice(0, 5).reverse().map(stat => ({
     label: stat.week.split('-W')[1] || stat.week,
     value: stat.completed,
   }));
